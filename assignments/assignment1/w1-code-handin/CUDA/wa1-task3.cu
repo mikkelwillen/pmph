@@ -13,6 +13,7 @@ __global__ void squareKernel(float* d_in, float *d_out) {
 int main(int argc, char** argv) {
     unsigned int N = atoi(argv[1]);
     unsigned int mem_size = N*sizeof(float);
+    unsigned int blocksize = 256
 
     // allocate host memory
     float* h_in = (float*) malloc(mem_size);
@@ -33,7 +34,7 @@ int main(int argc, char** argv) {
     cudaMemcpy(d_in, h_in, mem_size, cudaMemcpyHostToDevice);
 
     // execute the kernel
-    squareKernel<<< (256 - 1 + N)/256, 256>>>(d_in, d_out);
+    squareKernel<<< (blocksize - 1 + N)/blocksize, blocksize >>>(d_in, d_out);
 
     // copy result from device to host
     cudaMemcpy(h_out, d_out, mem_size, cudaMemcpyDeviceToHost);
