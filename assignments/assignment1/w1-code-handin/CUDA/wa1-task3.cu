@@ -33,7 +33,7 @@ int main(int argc, char** argv) {
     cudaMemcpy(d_in, h_in, mem_size, cudaMemcpyHostToDevice);
 
     // execute the kernel
-    squareKernel<<< 1, N>>>(d_in, d_out);
+    squareKernel<<< (256 - 1 + N)/256, N>>>(d_in, d_out);
 
     // copy result from device to host
     cudaMemcpy(h_out, d_out, mem_size, cudaMemcpyDeviceToHost);
