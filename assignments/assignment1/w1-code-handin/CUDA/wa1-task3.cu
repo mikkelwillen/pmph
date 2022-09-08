@@ -13,7 +13,7 @@ __global__ void squareKernel(float* d_in, float *gpu_out) {
 int main(int argc, char** argv) {
     unsigned int N = atoi(argv[1]);
     unsigned int mem_size = N*sizeof(float);
-    unsigned int blocksize = 256
+    unsigned int blocksize = 256;
 
     // allocate host memory
     float* h_in = (float*) malloc(mem_size);
