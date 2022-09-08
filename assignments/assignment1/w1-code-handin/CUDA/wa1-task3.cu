@@ -20,7 +20,7 @@ int main(int argc, char** argv) {
 
     // initialize the memory
     for (unsigned int i = 0; i < N; ++i) {
-        h_in[i] = ((float) i) + 1.0;
+        h_in[i] = (float)i;
     }
 
     // allocate device memory
