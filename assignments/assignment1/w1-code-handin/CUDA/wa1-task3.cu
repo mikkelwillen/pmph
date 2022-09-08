@@ -19,8 +19,8 @@ int main(int argc, char** argv) {
     float* h_out = (float*) malloc(mem_size);
 
     // initialize the memory
-    for(unsigned int i = 1; i < N; ++i) {
-        h_in[i] = (float) i;
+    for (unsigned int i = 0; i < N; ++i) {
+        h_in[i] = (float) i + 1.0;
     }
 
     // allocate device memory
@@ -39,7 +39,7 @@ int main(int argc, char** argv) {
     cudaMemcpy(h_out, d_out, mem_size, cudaMemcpyDeviceToHost);
 
     // print result
-    for(unsigned int i=0; i<N; ++i) {
+    for (unsigned int i = 0; i < N; ++i) {
         printf("%.6f\n", h_out[i]);
     }
 
