@@ -46,5 +46,5 @@ int main(int argc, char** argv) {
 
     // clean-up memory
     free(h_in); free(h_out);
-    cudaFree(d_in); cudaFree(d_out);
+    cudaFree(d_in); cudaFree(gpu_out);
 }
