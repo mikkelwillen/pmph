@@ -7,7 +7,7 @@
 __global__ void squareKernel(float* d_in, float *d_out) {
     const unsigned int lid = threadIdx.x; // local id inside a block
     const unsigned int gid = blockIdx.x*blockDim.x + lid; // global id
-    d_out[gid] = (d_in[gid]/(d_in[gid] - 2.3))**3; // do computation
+    d_out[gid] = pow((d_in[gid]/(d_in[gid] - 2.3)), 3.0); // do computation
 }
 
 int main(int argc, char** argv) {
