@@ -11,7 +11,7 @@ __global__ void squareKernel(float* d_in, float *d_out) {
 }
 
 int main(int argc, char** argv) {
-    unsigned int N = 32;
+    unsigned int N = 753411;
     unsigned int mem_size = N*sizeof(float);
 
     // allocate host memory
@@ -19,9 +19,9 @@ int main(int argc, char** argv) {
     float* h_out = (float*) malloc(mem_size);
 
     // initialize the memory
-    for(unsigned int i=0; i<N; ++i){
-    h_in[i] = (float)i;
-    } 
+    for(unsigned int i = 1; i < N; ++i) {
+        h_in[i] = (float) i;
+    }
 
     // allocate device memory
     float* d_in;
@@ -39,7 +39,9 @@ int main(int argc, char** argv) {
     cudaMemcpy(h_out, d_out, mem_size, cudaMemcpyDeviceToHost);
 
     // print result
-    for(unsigned int i=0; i<N; ++i) printf("%.6f\n", h_out[i]);
+    for(unsigned int i=0; i<N; ++i) {
+        printf("%.6f\n", h_out[i]);
+    }
 
     // clean-up memory
     free(h_in); free(h_out);
