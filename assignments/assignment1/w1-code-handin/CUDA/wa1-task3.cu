@@ -4,10 +4,10 @@
 #include <math.h>
 #include <cuda_runtime.h>
 
-__global__ void squareKernel(float* d_in, float *d_out) {
+__global__ void squareKernel(float* d_in, float *gpu_out) {
     const unsigned int lid = threadIdx.x; // local id inside a block
     const unsigned int gid = blockIdx.x*blockDim.x + lid; // global id
-    d_out[gid] = pow((d_in[gid]/(d_in[gid] - 2.3)), 3.0); // do computation
+    gpu_out[gid] = pow((d_in[gid]/(d_in[gid] - 2.3)), 3.0); // do computation
 }
 
 int main(int argc, char** argv) {
@@ -26,18 +26,18 @@ int main(int argc, char** argv) {
 
     // allocate device memory
     float* d_in;
-    float* d_out;
+    float* gpu_out;
     cudaMalloc((void**)&d_in, mem_size);
-    cudaMalloc((void**)&d_out, mem_size);
+    cudaMalloc((void**)&gpu_out, mem_size);
 
     // copy host memory to device
     cudaMemcpy(d_in, h_in, mem_size, cudaMemcpyHostToDevice);
 
     // execute the kernel
-    squareKernel<<< (blocksize - 1 + N)/blocksize, blocksize >>>(d_in, d_out);
+    squareKernel<<< (blocksize - 1 + N)/blocksize, blocksize >>>(d_in, gpu_out);
 
     // copy result from device to host
-    cudaMemcpy(h_out, d_out, mem_size, cudaMemcpyDeviceToHost);
+    cudaMemcpy(h_out, gpu_out, mem_size, cudaMemcpyDeviceToHost);
 
     // print result
     for (unsigned int i = 0; i < N; ++i) {
