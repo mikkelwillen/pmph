@@ -11,7 +11,7 @@ __global__ void squareKernel(float* d_in, float *d_out) {
 }
 
 int main(int argc, char** argv) {
-    unsigned int N = 32;
+    unsigned int N = 64;
     unsigned int mem_size = N*sizeof(float);
 
     // allocate host memory
