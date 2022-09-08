@@ -20,8 +20,8 @@ let redOp (pred2 : int -> int -> bool)
 
   let connect= pred2 lastx firsty
   let newlss = if connect then max(lssx, max (lssy, lcsx + lisy)) else max(lssx, lssy)
-  let newlis = if connect then max(lisx, (tlx + lisy)) else lisx
-  let newlcs = if connect then max(lcsy, (tly + lcsx)) else lcsy
+  let newlis = if connect && lisx == tlx then tlx + lisy else lisx
+  let newlcs = if connect && lcsy == tly then tly + lcsx else lcsy
   let newtl  = tlx + tly
   let first  = if tlx == 0 then firsty else firstx
   let last   = if tly == 0 then lastx else lasty in
