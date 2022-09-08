@@ -40,7 +40,7 @@ int main(int argc, char** argv) {
 
     // print result
     for (unsigned int i = 0; i < N; ++i) {
-        printf("%.6f\n", h_out[i]);
+        printf("%d - %.6f\n", i h_out[i]);
     }
 
     // clean-up memory
