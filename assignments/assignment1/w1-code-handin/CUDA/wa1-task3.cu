@@ -50,12 +50,18 @@ int main(int argc, char** argv) {
     // copy result from device to host
     cudaMemcpy(h_out, gpu_out, mem_size, cudaMemcpyDeviceToHost);
 
+    int test = 1
     // print result
     for (unsigned int i = 0; i < N; ++i) {
         if (cpu_out[i] - h_out[i] > 0.0001) {
             printf("surt kurt\n");
             printf("%-6f - %.6f\n", cpu_out[i], h_out[i]);
+            test = 0;
         }
+    }
+
+    if(test) {
+        printf("det virker sgu");
     }
 
     // clean-up memory
