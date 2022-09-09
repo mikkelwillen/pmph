@@ -53,7 +53,7 @@ int main(int argc, char** argv) {
     int test = 1;
     // print result
     for (unsigned int i = 0; i < N; ++i) {
-        if (cpu_out[i] - h_out[i] > 0.0001) {
+        if (cpu_out[i] - h_out[i] > 0.0000001) {
             printf("surt kurt\n");
             printf("%-6f - %.6f\n", cpu_out[i], h_out[i]);
             test = 0;
@@ -61,7 +61,7 @@ int main(int argc, char** argv) {
     }
 
     if(test) {
-        printf("det virker sgu");
+        printf("det virker sgu\n");
     }
 
     // clean-up memory
