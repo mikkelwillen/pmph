@@ -52,7 +52,10 @@ int main(int argc, char** argv) {
 
     // print result
     for (unsigned int i = 0; i < N; ++i) {
-        printf("%-6f - %.6f\n", cpu_out[i], h_out[i]);
+        if (cpu_out[i] - h_out[i] > 0.0001) {
+            printf("øv bøv\n");
+            printf("%-6f - %.6f\n", cpu_out[i], h_out[i]);
+        }
     }
 
     // clean-up memory
