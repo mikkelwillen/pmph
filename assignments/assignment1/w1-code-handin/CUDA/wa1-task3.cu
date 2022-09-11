@@ -6,8 +6,8 @@
 
 __global__ void squareKernel(float* d_in, float* gpu_out) {
     const unsigned int lid = threadIdx.x; // local id inside a block
-    const unsigned int gid = blockIdx.x*blockDim.x + lid; // global id
-    gpu_out[gid] = pow(d_in[gid]/(d_in[gid] - 2.3), 3.0); // do computation
+    const unsigned int gid = blockIdx.x * blockDim.x + lid; // global id
+    gpu_out[gid] = pow(d_in[gid] / (d_in[gid] - 2.3), 3.0); // do computation
 }
 
 void squareSeq (unsigned int n, float* cpu_out) {
@@ -17,7 +17,7 @@ void squareSeq (unsigned int n, float* cpu_out) {
     }
 
 int main(int argc, char** argv) {
-    unsigned int N = atoi(argv[1]);
+    unsigned int N = 753411;
     unsigned int mem_size = N*sizeof(float);
     unsigned int blocksize = 256;
 
@@ -42,7 +42,7 @@ int main(int argc, char** argv) {
     cudaMemcpy(d_in, h_in, mem_size, cudaMemcpyHostToDevice);
 
     // execute the kernel
-    squareKernel<<< (blocksize - 1 + N)/blocksize, blocksize >>>(d_in, gpu_out);
+    squareKernel<<< (blocksize - 1 + N) / blocksize, blocksize >>>(d_in, gpu_out);
 
     // execute the seq
     squareSeq(N, cpu_out);
