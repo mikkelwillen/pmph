@@ -71,7 +71,7 @@ int main(int argc, char** argv) {
     gettimeofday(&tStartP, NULL);
 
     // execute kernel
-    for(int i = 0; i < GPU_RUNS, i++) {
+    for(int i = 0; i < GPU_RUNS; i++) {
         squareKernel<<< (blocksize - 1 + N) / blocksize, blocksize >>>(d_in, gpu_out);
     }
     
@@ -83,7 +83,7 @@ int main(int argc, char** argv) {
     gettimeofday(%tStartS, NULL);
 
     // execute the seq
-    for(int i = 0; i < GPU_RUNS, i++) {
+    for(int i = 0; i < GPU_RUNS; i++) {
         squareSeq(N, cpu_out);
     }
 
@@ -106,8 +106,8 @@ int main(int argc, char** argv) {
 
     if(test) {
         printf("det virker sgu\n");
-        printf("Parallel took:   %.2fms\n", elapsedP.elapsed / 1000.0);
-        printf("Sequentiel took: %.2fms\n", elapsedP.elapsed / 1000.0);
+        printf("Parallel took:   %.2fms\n", elapsedP / 1000.0);
+        printf("Sequentiel took: %.2fms\n", elapsedS / 1000.0);
     }
 
     // clean-up memory
