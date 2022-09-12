@@ -106,8 +106,8 @@ int main(int argc, char** argv) {
 
     if(test) {
         printf("det virker sgu\n");
-        printf("Parallel took:   %.2fms\n", elapsedP / 1000.0);
-        printf("Sequentiel took: %.2fms\n", elapsedS / 1000.0);
+        printf("Parallel took:   %d ms\n", elapsedP);
+        printf("Sequentiel took: %d ms\n", elapsedS);
     }
 
     // clean-up memory
