@@ -24,7 +24,7 @@ int timevalSubstract (struct timeval* result,
     unsigned int resolution = 1000000;
     long int diff = (t2 -> tv_usec + resolution * t2 -> tv_sec) - 
                     (t1 -> tv_usec + resolution * t1 -> tv_sec);
-    result -> tv_sec = diff / resolution;
+    result -> tv_sec  = diff / resolution;
     result -> tv_usec = diff % resolution;
     return (diff<0);
 }
@@ -32,7 +32,7 @@ int timevalSubstract (struct timeval* result,
 #define GPU_RUNS 100
 int main(int argc, char** argv) {
     // initial values
-    unsigned int N = 753411;
+    unsigned int N = atoi[argv[1]];
     unsigned int mem_size = N*sizeof(float);
     unsigned int blocksize = 256;
 
