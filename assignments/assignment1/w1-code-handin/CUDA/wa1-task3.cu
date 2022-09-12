@@ -33,7 +33,7 @@ int timevalSubstract (struct timeval* result,
 int main(int argc, char** argv) {
     // initial values
     unsigned int N = atoi(argv[1]);
-    unsigned int mem_size = N*sizeof(float);
+    unsigned int mem_size = N * sizeof(float);
     unsigned int blocksize = 256;
 
     // variables to calc runtimes
