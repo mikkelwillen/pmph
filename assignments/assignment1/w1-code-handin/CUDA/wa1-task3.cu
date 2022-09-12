@@ -89,7 +89,7 @@ int main(int argc, char** argv) {
 
     gettimeofday(&tEndS, NULL);
     timevalSubstract(&tDiffS, &tEndS, &tStartS);
-    elapsedS = (tDiffP.tv_sec*1e6 + tDiffP.tv_usec) / GPU_RUNS;
+    elapsedS = (tDiffS.tv_sec*1e6 + tDiffS.tv_usec) / GPU_RUNS;
 
     // copy result from device to host
     cudaMemcpy(h_out, gpu_out, mem_size, cudaMemcpyDeviceToHost);
