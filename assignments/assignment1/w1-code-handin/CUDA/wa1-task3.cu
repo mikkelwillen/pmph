@@ -80,7 +80,7 @@ int main(int argc, char** argv) {
     elapsedP = (tDiffP.tv_sec*1e6 + tDiffP.tv_usec) / GPU_RUNS;
 
     // running the sequential function
-    gettimeofday(%tStartS, NULL);
+    gettimeofday(&tStartS, NULL);
 
     // execute the seq
     for(int i = 0; i < GPU_RUNS; i++) {
