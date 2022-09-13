@@ -99,8 +99,13 @@ let spMatVctMult [num_elms] [vct_len] [num_rows]
                  (vct : [vct_len]f32) : [num_rows]f32 =
   -- makes the index array
   let shp_sc = scan (+) 0 mat_shp
+  -- made exlusive
+  let inds = map(\i -> if i == 0
+                          then 0
+                       else
+                          shp_sc[i - 1]) (iota num_rows)
   -- makes an array of 0 and a number
-  let tmp = scatter (replicate num_elms 0) shp_sc mat_shp
+  let tmp = scatter (replicate num_elms 0) inds mat_shp
   -- converts to boolean
   let flag = map (\i -> i != 0) tmp
   -- multiply the vector on to the matrix
