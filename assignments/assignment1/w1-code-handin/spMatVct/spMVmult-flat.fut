@@ -113,7 +113,7 @@ let spMatVctMult [num_elms] [vct_len] [num_rows]
   -- calls the segmentScan function
   let segSum = sgmSumF32 flag vTr
   -- get the result
-  in map (\i -> segSum[i - 1]) mat_shp
+  in map (\i -> segSum[i - 1]) shp_sc
   --in  replicate num_rows 0.0f32
   
 -- One may run with for example:
