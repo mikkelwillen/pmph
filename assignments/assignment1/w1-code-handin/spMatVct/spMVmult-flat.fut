@@ -97,10 +97,19 @@ let spMatVctMult [num_elms] [vct_len] [num_rows]
                  (mat_val : [num_elms](i64,f32))
                  (mat_shp : [num_rows]i64)
                  (vct : [vct_len]f32) : [num_rows]f32 =
-
-  let shp_sc   = scan (+) 0 mat_shp
-  -- ... continue here ...
-  in  replicate num_rows 0.0f32
+  -- makes the index array
+  let shp_sc = scan (+) 0 mat_shp
+  -- makes an array of 0 and a number
+  let tmp = scatter (replicate num_elms 0) shp_sc mat_shp
+  -- converts to boolean
+  let flag = map (\i -> i != 0) tmp
+  -- multiply the vector on to the matrix
+  let vTr = map (\(i, x) -> x * vct[i]) mat_val
+  -- calls the segmentScan function
+  let segSum = sgmSumF32 flag vTr
+  -- get the result
+  in map (\i -> segSum[i - 1]) mat_shp
+  --in  replicate num_rows 0.0f32
   
 -- One may run with for example:
 -- $ futhark dataset --i64-bounds=0:9999 -g [1000000]i64 --f32-bounds=-7.0:7.0 -g [1000000]f32 --i64-bounds=100:100 -g [10000]i64 --f32-bounds=-10.0:10.0 -g [10000]f32 | ./spMVmult-seq -t /dev/stderr > /dev/null
