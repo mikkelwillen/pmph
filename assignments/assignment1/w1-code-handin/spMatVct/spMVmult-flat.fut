@@ -99,7 +99,7 @@ let spMatVctMult [num_elms] [vct_len] [num_rows]
                  (vct : [vct_len]f32) : [num_rows]f32 =
   -- makes the index array
   let shp_sc = scan (+) 0 mat_shp
-  -- made exlusive
+  -- scan made exlusive
   let inds = map(\i -> if i == 0
                           then 0
                        else

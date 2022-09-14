@@ -9,7 +9,7 @@
 __global__ void squareKernel(float* d_in, float* gpu_out) {
     const unsigned int lid = threadIdx.x; // local id inside a block
     const unsigned int gid = blockIdx.x * blockDim.x + lid; // global id
-    gpu_out[gid] = pow(d_in[gid] / (d_in[gid] - 2.3), 3.0); // do computation
+    gpu_out[gid] = pow(gid / (gid - 2.3), 3.0); // do computation
 }
 
 void squareSeq (unsigned int n, float* cpu_out) {
