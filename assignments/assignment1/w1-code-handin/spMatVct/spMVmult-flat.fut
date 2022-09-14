@@ -97,9 +97,9 @@ let spMatVctMult [num_elms] [vct_len] [num_rows]
                  (mat_val : [num_elms](i64,f32))
                  (mat_shp : [num_rows]i64)
                  (vct : [vct_len]f32) : [num_rows]f32 =
-  -- makes the index array
+  -- makes a kind of index array
   let shp_sc = scan (+) 0 mat_shp
-  -- scan made exlusive
+  -- scan made exlusive - index array
   let inds = map(\i -> if i == 0
                           then 0
                        else
@@ -114,7 +114,6 @@ let spMatVctMult [num_elms] [vct_len] [num_rows]
   let segSum = sgmSumF32 flag vTr
   -- get the result
   in map (\i -> segSum[i - 1]) shp_sc
-  --in  replicate num_rows 0.0f32
   
 -- One may run with for example:
 -- $ futhark dataset --i64-bounds=0:9999 -g [1000000]i64 --f32-bounds=-7.0:7.0 -g [1000000]f32 --i64-bounds=100:100 -g [10000]i64 --f32-bounds=-10.0:10.0 -g [10000]f32 | ./spMVmult-seq -t /dev/stderr > /dev/null
