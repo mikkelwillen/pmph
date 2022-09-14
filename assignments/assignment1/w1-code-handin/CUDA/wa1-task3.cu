@@ -9,7 +9,9 @@
 __global__ void squareKernel(float* d_in, float* gpu_out) {
     const unsigned int lid = threadIdx.x; // local id inside a block
     const unsigned int gid = blockIdx.x * blockDim.x + lid; // global id
-    gpu_out[gid] = pow(gid / (gid - 2.3), 3.0); // do computation
+    int temp = d_in[gid]
+    int inner = temp / (temp - 2.3)
+    gpu_out[gid] = inner * inner * inner; // do computation
 }
 
 void squareSeq (unsigned int n, float* cpu_out) {
@@ -106,8 +108,8 @@ int main(int argc, char** argv) {
 
     if(test) {
         printf("det virker sgu\n");
-        printf("Parallel took:   %d microseconds (%.2fms)\n", elapsedP, elapsedP / 1000.0);
-        printf("Sequentiel took: %d microseconds (%.2fms)\n", elapsedS, elapsedS / 1000.0);
+        printf("Parallel took  :  %d microseconds (%.2fms)\n", elapsedP, elapsedP / 1000.0);
+        printf("Sequential took:  %d microseconds (%.2fms)\n", elapsedS, elapsedS / 1000.0);
     }
 
     // clean-up memory
