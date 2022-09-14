@@ -16,7 +16,8 @@ __global__ void squareKernel(float* d_in, float* gpu_out) {
 
 void squareSeq (unsigned int n, float* cpu_out) {
         for (unsigned int i = 0; i < n; i++) {
-            cpu_out[i] = pow((float)i/((float)i - 2.3), 3.0);
+            float temp = (float)i / ((float)i - 2.3)
+            cpu_out[i] = temp * temp * temp;
         }
     }
 
