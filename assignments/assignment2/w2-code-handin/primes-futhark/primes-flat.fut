@@ -3,6 +3,24 @@
 -- compiled input { 30i64 } output { [2i64, 3i64, 5i64, 7i64, 11i64, 13i64, 17i64, 19i64, 23i64, 29i64] }
 -- compiled input { 10000000i64 } auto output
 
+let mkFlagArray 't [m] (aoa_shp: [m]i32) (zero: t) (aoa_val: [m]t) (aoa_len: i32) : []i32 =
+  let shp_rot = map (\i -> if i ==  0 then 0
+                           else aoa_shp[i-1]) (iota m)
+  let shp_scn = scan (+) 0 shp_rot
+  let shp_ind = map2 (\shp ind -> if shp == 0 then -1
+                                else ind) aoa_shp shp_scn
+  in scatter (replicate aoa_len zero) aoa_shp aoa_val
+
+let sgmSumInc [n] (flg : [n]bool) (arr : [n]i32) : [n]i32 =
+  let flgs_vals = 
+    scan (\ (i1, x1) (i2,x2) -> 
+            let i = i1 || i2 in
+              if i2 then (i, x2)
+              else (i, x1 + x2))
+         (false, 0i32) (zip flg arr)
+  let (_, vals) = unzip flgs_vals
+  in vals
+
 let primesFlat (n : i64) : []i64 =
   let sq_primes   = [2i64, 3i64, 5i64, 7i64]
   let len  = 8i64
@@ -14,6 +32,12 @@ let primesFlat (n : i64) : []i64 =
 
       let mult_lens = map (\ p -> (len / p) - 1 ) sq_primes
       let flat_size = reduce (+) 0 mult_lens
+
+      let iot = 
+        let len = length mult_lens
+        let flag = mkFlagArray mult_lens 0 (replicate len 1) flat_size
+        let vals = map (\f -> if f != 0 then 0 else 1) flag
+        in sgmSumInc flag vals
 
       --------------------------------------------------------------
       -- The current iteration knowns the primes <= 'len', 
