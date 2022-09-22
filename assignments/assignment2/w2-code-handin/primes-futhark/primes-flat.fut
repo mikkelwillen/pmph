@@ -3,13 +3,13 @@
 -- compiled input { 30i64 } output { [2i64, 3i64, 5i64, 7i64, 11i64, 13i64, 17i64, 19i64, 23i64, 29i64] }
 -- compiled input { 10000000i64 } auto output
 
-let mkFlagArray 't [m] (aoa_shp: [m]i64) (zero: t) (aoa_val: [m]t) (aoa_len: i64) : []i32 =
+let mkFlagArray 't [m] (aoa_shp: [m]i32) (zero: t) (aoa_val: [m]t) (aoa_len: i32) : []i32 =
   let shp_rot = map (\i -> if i ==  0 then 0
                            else aoa_shp[i-1]) (iota m)
   let shp_scn = scan (+) 0 shp_rot
   let shp_ind = map2 (\shp ind -> if shp == 0 then -1
                                 else ind) aoa_shp shp_scn
-  in scatter (replicate aoa_len zero) aoa_shp aoa_val
+  in scatter (replicate aoa_len zero) shp_ind aoa_val
 
 let sgmSumInc [n] (flg : [n]bool) (arr : [n]i32) : [n]i32 =
   let flgs_vals = 
