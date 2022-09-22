@@ -33,12 +33,23 @@ let primesFlat (n : i64) : []i64 =
       let mult_lens = map (\ p -> (len / p) - 1 ) sq_primes
       let flat_size = reduce (+) 0 mult_lens
 
-      let iot = 
-        let len = length mult_lens
-        let flag = mkFlagArray mult_lens 0 (replicate len 1) flat_size
-        let vals = map (\f -> if f != 0 then 0 else 1) flag
-        in sgmSumInc flag vals
+      let composite = 
+        let iot = 
+          let len = length mult_lens
+          let flag = mkFlagArray mult_lens 0 (replicate len 1) flat_size
+          let vals = map (\f -> if f != 0 then 0 else 1) flag
+          in sgmSumInc flag vals
 
+        let arr = map (+2) iot
+
+        let ps = 
+          let (flag_n, flag_v) =
+                            unzip <|
+                            mkFlagArray mult_lens (0, 0) <|
+                            zip mult_lens sq_primes
+          in sgmSumInc flag_n, flag_v
+        
+        in map2 (*) ps arr
       --------------------------------------------------------------
       -- The current iteration knowns the primes <= 'len', 
       --  based on which it will compute the primes <= 'len*len'
