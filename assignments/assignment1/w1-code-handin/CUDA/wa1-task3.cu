@@ -77,11 +77,6 @@ int main(int argc, char** argv) {
     for(int i = 0; i < GPU_RUNS; i++) {
         squareKernel<<< (blocksize - 1 + N) / blocksize, blocksize >>>(d_in, gpu_out);
     }
-
-    // test
-    for(int i = 0; i < GPU_RUNS; i++) {
-        squareSeq(N, cpu_out);
-    }
     
     gettimeofday(&tEndP, NULL);
     timevalSubstract(&tDiffP, &tEndP, &tStartP);
