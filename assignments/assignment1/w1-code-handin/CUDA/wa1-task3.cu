@@ -6,7 +6,7 @@
 #include <time.h>
 #include <cuda_runtime.h>
 
-__global__ void squareKernel(float* d_in, float* gpu_out) {
+__global__ void squareKernel(float* d_in, float* gpu_out, int N) {
     const unsigned int lid = threadIdx.x; // local id inside a block
     const unsigned int gid = blockIdx.x * blockDim.x + lid; // global id
     if (gid < N) {
@@ -77,7 +77,7 @@ int main(int argc, char** argv) {
 
     // execute kernel
     for(int i = 0; i < GPU_RUNS; i++) {
-        squareKernel<<< (blocksize - 1 + N) / blocksize, blocksize >>>(d_in, gpu_out);
+        squareKernel<<< (blocksize - 1 + N) / blocksize, blocksize >>>(d_in, gpu_out, N);
     }
     
     gettimeofday(&tEndP, NULL);
