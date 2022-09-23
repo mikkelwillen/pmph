@@ -78,7 +78,7 @@ int main(int argc, char** argv) {
     // execute kernel
     for(int i = 0; i < GPU_RUNS; i++) {
         squareKernel<<< (blocksize - 1 + N) / blocksize, blocksize >>>(d_in, gpu_out, N);
-    }
+    } cudaThreadSynchronize();
     
     gettimeofday(&tEndP, NULL);
     timevalSubstract(&tDiffP, &tEndP, &tStartP);
