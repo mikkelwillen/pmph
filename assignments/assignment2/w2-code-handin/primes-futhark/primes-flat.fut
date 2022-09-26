@@ -71,7 +71,7 @@ let primesFlat (n : i64) : []i64 =
       -- Also note that `not_primes` has flat length equal to `flat_size`
       --  and the shape of `composite` is `mult_lens`. 
       
-      let not_primes = reduce (++) [] composite
+      let not_primes = 
 
       -- If not_primes is correctly computed, then the remaining
       -- code is correct and will do the job of computing the prime
