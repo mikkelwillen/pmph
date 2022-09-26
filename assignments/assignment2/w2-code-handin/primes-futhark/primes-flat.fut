@@ -3,7 +3,7 @@
 -- compiled input { 30i64 } output { [2i64, 3i64, 5i64, 7i64, 11i64, 13i64, 17i64, 19i64, 23i64, 29i64] }
 -- compiled input { 10000000i64 } auto output
 
-let mkFlagArray 't [m] (aoa_shp: [m]i64) (zero: t) (aoa_val: [m]t) (aoa_len: i64) : []i64 =
+let mkFlagArray 't [m] (aoa_shp: [m]i64) (zero: t) (aoa_val: [m]t) (aoa_len: i64) : [aoa_len]t =
   let shp_rot = map (\i -> if i == 0 then 0
                            else aoa_shp[i - 1]) (iota m)
   let shp_scn = scan (+) 0 shp_rot
