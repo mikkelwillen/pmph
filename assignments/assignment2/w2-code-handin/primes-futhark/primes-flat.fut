@@ -4,20 +4,20 @@
 -- compiled input { 10000000i64 } auto output
 
 let mkFlagArray 't [m] (aoa_shp: [m]i64) (zero: t) (aoa_val: [m]t) (aoa_len: i64) : []i64 =
-  let shp_rot = map (\i -> if i ==  0 then 0
+  let shp_rot = map (\i -> if i == 0 then 0
                            else aoa_shp[i - 1]) (iota m)
   let shp_scn = scan (+) 0 shp_rot
   let shp_ind = map2 (\shp ind -> if shp == 0 then -1
                                 else ind) aoa_shp shp_scn
   in scatter (replicate aoa_len zero) shp_ind aoa_val
 
-let sgmSumInc [n] (flg : [n]bool) (arr : [n]i32) : [n]i32 =
+let sgmSumInc [n] (flg : [n]bool) (arr : [n]i64) : [n]i64 =
   let flgs_vals = 
     scan (\ (i1, x1) (i2,x2) -> 
             let i = i1 || i2 in
               if i2 then (i, x2)
               else (i, x1 + x2))
-         (false, 0i32) (zip flg arr)
+         (false, 0i64) (zip flg arr)
   let (_, vals) = unzip flgs_vals
   in vals
 
