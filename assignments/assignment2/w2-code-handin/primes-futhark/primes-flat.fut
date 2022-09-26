@@ -5,7 +5,7 @@
 
 let mkFlagArray 't [m] (aoa_shp: [m]i64) (zero: t) (aoa_val: [m]t) (aoa_len: i64) : []i64 =
   let shp_rot = map (\i -> if i ==  0 then 0
-                           else aoa_shp[i-1]) (iota m)
+                           else aoa_shp[i - 1]) (iota m)
   let shp_scn = scan (+) 0 shp_rot
   let shp_ind = map2 (\shp ind -> if shp == 0 then -1
                                 else ind) aoa_shp shp_scn
@@ -36,7 +36,7 @@ let primesFlat (n : i64) : []i64 =
       let composite = 
         let iot = 
           let len = length mult_lens
-          let flag = mkFlagArray mult_lens 0 (replicate len 1) flat_size
+          let flag = mkFlagArray mult_lens 0i64 (replicate len 1) flat_size
           let vals = map (\f -> if f != 0 then 0 else 1) flag
           in sgmSumInc flag vals
 
