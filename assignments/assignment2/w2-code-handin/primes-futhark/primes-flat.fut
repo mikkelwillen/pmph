@@ -37,7 +37,7 @@ let primesFlat (n : i64) : []i64 =
         let iot = 
           let len2 = length mult_lens
           let flag = mkFlagArray mult_lens 0i64 mult_lens flat_size
-          let flag2 = map (\f -> f != 0)
+          let flag2 = map (\f -> f != 0) flag
           let vals = map (\f -> if f != 0 then 0 else 1) flag
           in sgmSumInc flag2 vals
 
