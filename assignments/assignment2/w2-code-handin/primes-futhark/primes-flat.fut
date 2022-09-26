@@ -71,7 +71,7 @@ let primesFlat (n : i64) : []i64 =
       -- Also note that `not_primes` has flat length equal to `flat_size`
       --  and the shape of `composite` is `mult_lens`. 
       
-      let not_primes = 
+      let not_primes = composite
 
       -- If not_primes is correctly computed, then the remaining
       -- code is correct and will do the job of computing the prime
@@ -79,13 +79,13 @@ let primesFlat (n : i64) : []i64 =
       --------------------------------------------------------------
       --------------------------------------------------------------
 
-       let zero_array = replicate flat_size 0i8
-       let mostly_ones= map (\ x -> if x > 1 then 1i8 else 0i8) (iota (len+1))
-       let prime_flags= scatter mostly_ones not_primes zero_array
-       let sq_primes = filter (\i-> (i > 1i64) && (i <= n) && (prime_flags[i] > 0i8))
-                              (0...len)
+      let zero_array = replicate flat_size 0i8
+      let mostly_ones= map (\ x -> if x > 1 then 1i8 else 0i8) (iota (len+1))
+      let prime_flags= scatter mostly_ones not_primes zero_array
+      let sq_primes = filter (\i-> (i > 1i64) && (i <= n) && (prime_flags[i] > 0i8))
+                            (0...len)
 
-       in  (sq_primes, len)
+      in  (sq_primes, len)
 
   in sq_primes
 
