@@ -48,7 +48,8 @@ let primesFlat (n : i64) : []i64 =
                             let len2 = length mult_lens
                             in unzip <|
                             mkFlagArray mult_lens (0,0) (zip mult_lens sq_primes) len2
-          in sgmSumInc flag_n flag_v
+          let flag_n2 = map (\f -> f != 0) flag_n
+          in sgmSumInc flag_n2 flag_v
         
         in map2 (*) ps arr
       --------------------------------------------------------------
