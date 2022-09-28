@@ -204,6 +204,7 @@ scanIncWarp( volatile typename OP::RedElTp* ptr, const unsigned int idx) {
             ptr[lane] = OP::apply(ptr[lane - h], ptr[lane]);
         }
     }
+    return OP::remVolatile(ptr[lane])
 }
 
 /**
