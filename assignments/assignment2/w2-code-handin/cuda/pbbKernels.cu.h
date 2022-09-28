@@ -201,10 +201,10 @@ scanIncWarp( volatile typename OP::RedElTp* ptr, const unsigned int idx) {
     for(int d = 0; d < lgWARP - 1; d++) {
         int h = 1 << d;
         if(lane >= h) {
-            ptr[lane] = OP::apply(ptr[lane - h], ptr[lane]);
-        } __syncthreads();
+            ptr[idx] = OP::apply(ptr[idx - h], ptr[idx]);
+        }
     }
-    return OP::remVolatile(ptr[lane]);
+    return OP::remVolatile(ptr[idx]);
 }
 
 /**
