@@ -33,7 +33,7 @@ select_last_in_sgm(int mat_rows, int* mat_shp_sc_d, float* tmp_scan, float* res_
     const unsigned int lid = threadIdx.x; // local id inside a block
     const unsigned int gid = blockIdx.x * blockDim.x + lid; // global id
     if (gid < mat_rows) {
-        res_vct_d[gid] = tmp_scan[mat_shp_sc_d[gid] - 1]
+        res_vct_d[gid] = tmp_scan[mat_shp_sc_d[gid] - 1];
     }
 }
 
