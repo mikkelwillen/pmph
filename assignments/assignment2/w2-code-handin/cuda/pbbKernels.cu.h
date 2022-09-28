@@ -176,18 +176,34 @@ class Mssp {
  *     all threads will reach the barrier, resulting in incorrect
  *     results.) 
  */ 
+// gammel
+// template<class OP>
+// __device__ inline typename OP::RedElTp
+// scanIncWarp( volatile typename OP::RedElTp* ptr, const unsigned int idx ) {
+//     const unsigned int lane = idx & (WARP - 1);
+
+//     if(lane == 0) {
+//         #pragma unroll
+//         for(int i = 1; i < WARP; i++) {
+//             ptr[idx + i] = OP::apply(ptr[idx + i - 1], ptr[idx + i]);
+//         }
+//     }
+//     return OP::remVolatile(ptr[idx]);
+// }
+
+// ny
 template<class OP>
 __device__ inline typename OP::RedElTp
-scanIncWarp( volatile typename OP::RedElTp* ptr, const unsigned int idx ) {
-    const unsigned int lane = idx & (WARP-1);
+scanIncWarp( volatile typename OP::RedElTp* ptr, const unsigned int idx) {
+    const unsigned int lane = idx & (WARP - 1);
 
-    if(lane==0) {
-        #pragma unroll
-        for(int i=1; i<WARP; i++) {
-            ptr[idx+i] = OP::apply(ptr[idx+i-1], ptr[idx+i]);
+    #pragma unroll
+    for(int d = 0; d < lgWARP - 1; d++) {
+        int h = (int*)pow(2, d);
+        if(lane >= h) {
+            ptr[lane] = OP::apply(ptr[lane - h], ptr[lane])
         }
     }
-    return OP::remVolatile(ptr[idx]);
 }
 
 /**
@@ -217,7 +233,7 @@ scanIncBlock(volatile typename OP::RedElTp* ptr, const unsigned int idx) {
     //   the first warp. This works because
     //   warp size = 32, and 
     //   max block size = 32^2 = 1024
-    if (lane == (WARP-1)) { ptr[warpid] = OP::remVolatile(ptr[idx]); } 
+    if (lane == (WARP-1)) { ptr[warpid] = res; } // we got the result from line 223
     __syncthreads();
 
     // 3. scan again the first warp
