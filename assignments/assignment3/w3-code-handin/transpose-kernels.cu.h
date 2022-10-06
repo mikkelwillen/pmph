@@ -84,12 +84,13 @@ __global__ void
 transfProg(float* Atr, float* Btr, unsigned int N) {
     const unsigned int lid = threadIdx.x;
     const unsigned int gid = blockIdx.x * blockDim.x + lid;
+    float accum[1024*8];
     if (gid < N) {
-        float accum = 0;
+        accum[gid] = 0;
         for (int j = 0; j < 64; j++) {
             float tmpA = Atr[j, gid];
-            accum = sqrt(accum) + tmpA * tmpA;
-            Btr[j, gid] = accum;
+            accum[gid] = sqrt(accum[gid]) + tmpA * tmpA;
+            Btr[j, gid] = accum[gid];
         }
     }
 }
