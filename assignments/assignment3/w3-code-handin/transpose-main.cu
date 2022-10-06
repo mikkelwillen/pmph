@@ -8,7 +8,7 @@
 #include "transpose-host.cu.h"
 
 #define HEIGHT_A 1024*8   //12835//2048//2048
-#define  WIDTH_A 1024*8  //15953 //1024//2048
+#define WIDTH_A  1024*8  //15953 //1024//2048
 #define TILE     32
 #define RUNS_GPU 100
 
@@ -182,7 +182,7 @@ int weekly3Task3( int height
         //       - fill in the implementation CPU orchestration code below
         //       - and the corresponding CUDA kernel!
         for (int kkk = 0; kkk < REPEAT; kkk++) {
-            transposeTiled<float, mem_size>(d_A, d_Atr, height, width);
+            transposeTiled<float, mem_size>(d_A, d_Atr, num_thds, width);
             // 3.a.1  you probably need to transpose d_A here by
             //        using function "transposeTiled<float, TILE>"
             //        i.e., source array is d_A, result array is d_Atr
@@ -193,7 +193,7 @@ int weekly3Task3( int height
             // 3.a.3  you probably need to transpose-back the result here
             //        i.e., source array is d_Btr, and transposed result
             //        is in d_B.
-            tranposeTiled<float, mem_size>(d_Btr, d_b, width, height);
+            tranposeTiled<float, mem_size>(d_Btr, d_b, width, num_thds);
         }
         cudaDeviceSynchronize();
 
