@@ -87,9 +87,10 @@ transfProg(float* Atr, float* Btr, unsigned int N) {
     if (gid < N) {
         float accum = 0;
         for (int j = 0; j < 64; j++) {
-            float tmpA = Atr[j, lid];
+            float tmpA = Atr[j, gid];
             accum = sqrt(accum) + tmpA * tmpA;
-            Btr[j, lid] = accum;
+            Btr[j, gid] = accum;
+            printf("Valid");
         }
     }
 }
