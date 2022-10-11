@@ -252,7 +252,7 @@ int weekly3Task3( int height
         timeval_subtract(&t_diff, &t_end, &t_start);
         elapsed = (t_diff.tv_sec*1e6+t_diff.tv_usec) / REPEAT; 
         gigaBytesPerSec = 2 * mem_size * 1.0e-3f / elapsed;
-        printf("Optimized Program runs on GPU in: %lu microsecs, GB/sec: %f\n", elapsed, gigaBytesPerSec);
+        printf("Optimized Program runs on GPU in: %lu microsecs, GB sec: %f\n", elapsed, gigaBytesPerSec);
 
         gpuAssert( cudaPeekAtLastError() );
 

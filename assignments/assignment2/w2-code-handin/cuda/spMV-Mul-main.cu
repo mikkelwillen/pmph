@@ -151,7 +151,7 @@ int SparseMatVctMult(int block_size, int mat_rows, int vct_size) {
         // The total number of non-zero elements in the matrix is `tot_size`.
         // The number of rows in the matrix is `mat_rows`.
         // The block size of the CUDA block is `block_size`
-        unsigned int num_blocks     = (mat_rows * vct_size) / block_size;
+        unsigned int num_blocks     = (tot_size + block_size - 1) / block_size;
         unsigned int num_blocks_shp = (mat_rows + block_size - 1) / block_size;
         
         { // copy-in stage
