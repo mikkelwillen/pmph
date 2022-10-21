@@ -1,3 +1,6 @@
 [submodule "pmph-e2022-pub"]
 	path = pmph-e2022-pub
 	url = git@github.com:diku-dk/pmph-e2022-pub.git
+[submodule "single-pass-scan"]
+	path = single-pass-scan
+	url = git@github.com:MatildeBroloes/single-pass-scan.git
