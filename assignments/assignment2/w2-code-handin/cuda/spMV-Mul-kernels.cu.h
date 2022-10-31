@@ -14,8 +14,11 @@ __global__ void
 mkFlags(int mat_rows, int* mat_shp_sc_d, char* flags_d) {
     const unsigned int lid = threadIdx.x; // local id inside a block
     const unsigned int gid = blockIdx.x * blockDim.x + lid; // global id
+    if (gid == 0) {
+        flags_d[0] = 1;
+    }
     if (gid < mat_rows) {
-        flags_d[mat_shp_sc_d[gid]] = 1;
+        flags_d[mat_shp_sc_d[gid - 1]] = 1;
     }
 }
 
